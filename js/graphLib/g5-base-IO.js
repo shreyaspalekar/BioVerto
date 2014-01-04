@@ -10,7 +10,7 @@
 	"csv",
 	// TODO: allow the separator to be specified by arg1 
 	function(blob, source, target){
-	    soruce = source || "source";
+	    source = source || "source";
 	    target = target || "target";
 	    var graph = g5.createGraph();
 	    d3.csv.parse(blob, function(data){
