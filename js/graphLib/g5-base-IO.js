@@ -10,17 +10,20 @@
 	"csv",
 	// TODO: allow the separator to be specified by arg1 
 	function(blob, source, target){
-	    soruce = source || "source";
+	    source = source || "source";
 	    target = target || "target";
 	    var graph = g5.createGraph();
-	    d3.csv.parse(blob, function(data){
-		data.each(function(d){
+	    //TODO:d3.csv.parse(blob, function(data){
+	    d3.csv(blob, function(data){//csv is parsed thorugh a, file blob is a file path
+		console.log(data);
+		data.forEach(function(d){//no each for array
 		    // assuming that source and target columns are defined
-		    var source = d[source];
+		    var s = d[source];
 		    delete d[source];
-		    var target = d[target];
+		    var t = d[target];
 		    delete d[target];
-		    graph.addEdge(source, target, d);
+		    console.log(s);
+		    graph.addEdge(s, t, d);
 		});
 		// select the first element and add accessor functions for mebers
 		var el = data[0] || {};

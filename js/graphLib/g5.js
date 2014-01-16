@@ -59,6 +59,11 @@ g5.addIOPlugin = function(name, inputFct, outputFct){
 g5.createGraph = function(){
     return Graph();
 }
+//function to return reference of Graph object
+g5.returnGraph = function(){
+    return Graph();
+}
+
 
 
 // create a graph from a blog using an IO plugin
@@ -78,7 +83,7 @@ g5.loadGraph = function(pluggin, blob, arg1, arg2, arg3){
 
 // all accessor repositories go from name->accessorFct
 g5.nodeAccessors = {};
-g5.edgeAccessor = {};
+g5.edgeAccessors = {};
 g5.addNodeAccessor = function(name, fct){
     if (g5.nodeAccessors[name] !== undefined){
 	alert("A node accessor with the name "+name+" is already present. Ignoring");
@@ -108,9 +113,11 @@ g5.listNodeAccessors = function(){
 // @member: string with the name of the member element
 g5.createAccessor = function(member){
     // QUESTION: is this better than creating a function using new Function or eval?
-    return function(obj){ return obj.data.[member]; }
+    var f = function(obj){ return obj.data[member]; };
+    return f;
 }
 
 // add an accessor function for id->name and weigh->weight
 g5.addNodeAccessor("name", g5.createAccessor("id"));
 g5.addEdgeAccessor("weight", g5.createAccessor("weigth"));
+//g5.nodeAccessors["name"](g5.nodes.id1);

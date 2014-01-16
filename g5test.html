@@ -1,0 +1,34 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="js/libs/jquery/jquery.min.js"></script>
+    <script src="js/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="js/libs/angularjs/angular.min.js"></script>
+    <script src="js/libs/angularjs/angular-sanitize.min.js"></script>
+    <script src="js/libs/ui-bootstrap-tpls-0.6.0.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/directives/compile.js"></script>
+    <script src="js/directives/d3Bar.js"></script>
+    <script src="js/directives/panel.js"></script>
+    <script src="js/factory/d3.js"></script>
+    <script src="js/services/graphQuery.js"></script>
+    <script src="js/services/componentGenerator.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/graphLib/g5.js"></script>
+    <script src="js/graphLib/g5-base-algos.js"></script>
+    <script src="js/graphLib/g5-base-IO.js"></script>
+    <script src="js/graphLib/graph.js"></script>
+    <script src="d3.v3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script type="text/javascript">
+	console.log(g5);
+	g5.createGraph();
+	console.log(graph);	
+	g5.ioPlugins.csv.input("test.csv","id0","id1");
+		
+
+
+    </script>
+</head>

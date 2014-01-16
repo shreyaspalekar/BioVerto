@@ -23,19 +23,22 @@
  *      http://graphdracula.net
  *
  /*--------------------------------------------------------------------------*/
+//graph object
+	var graph ={};
+	console.log(graph);
 
 /*
  * Edge Factory
  */
 var EdgeFactory = function() {
-    this.template = new Object();
-    this.template.data = new Object();
-    this.template.directed = false;
-    this.template.weight = 1;
+    graph.template = new Object();
+    graph.template.data = new Object();
+    graph.template.directed = false;
+    graph.template.weight = 1;
 };
 EdgeFactory.prototype = {
     build: function(source, target) {
-        var e = jQuery.extend(true, {}, this.template);
+        var e = jQuery.extend(true, {}, graph.template);
         e.source = source;
         e.target = target;
         return e;
@@ -45,13 +48,18 @@ EdgeFactory.prototype = {
 /*
  * Graph
  */
+//DISCUSS:Singleton
 var Graph = function() {
-    this.nodes = {};
-    this.edges = [];
-    this.snapshots = []; // previous graph states TODO to be implemented
-    this.edgeFactory = new EdgeFactory();
+	
+	graph.nodes = {};
+    	graph.edges = [];
+    	graph.snapshots = []; // previous graph states TODO to be implemented
+    	graph.edgeFactory = new EdgeFactory();
+	
+    	return graph;
+
 };
-Graph.prototype = {
+//Graph.prototype = {// Broken into individual function
     /* 
      * add a node
      * @id          the node's ID (string or number)
@@ -60,40 +68,47 @@ Graph.prototype = {
      *              representation
      * addNode will update the information if the node already exists
      */
-    addNode: function(id, content) {
+    graph.addNode = function(id, content) {
         /* testing if node is already existing in the graph */
-        if(this.nodes[id] == undefined) {
-            this.nodes[id] = new Graph.Node(id, content);
+        if(graph.nodes[id] == undefined) {
+            graph.nodes[id] = new Graph.Node(id, content);
         } else {
-	    jQuery.extend(this.nodes[id].data, data);
+	    jQuery.extend(graph.nodes[id].data, content);//data->content
 	}
-        return this.nodes[id];
-    },
+        return graph.nodes[id];
+    };
 
     // TODO: allow update of data for an edge
-    addEdge: function(source, target, data, directed) {
-        var s = this.addNode(source);
-        var t = this.addNode(target);
-        var edge = this.edgeFactory.build(s, t);
+	//Discuss with Prof. DOBRA
+    graph.addEdge = function(source, target, data, directed) {
+        
+	//console.log(source+" "+target);
+	var s = graph.addNode(source,data);
+        var t = graph.addNode(target,data);
+        var edge = graph.edgeFactory.build(s, t);
         jQuery.extend(edge.data, data);
         if (directed) { // if directed edge, add it to target adjList
 	    t.edges.push(edge);
 	    edge.directed = true;
 	}
         s.edges.push(edge);
-        this.edges.push(edge);
-    },
+        graph.edges.push(edge);
+    };
     
-    removeNode: function(id) {
-        delete this.nodes[id];
-        for(var i = 0; i < this.edges.length; i++) {
-            if (this.edges[i].source.id == id || this.edges[i].target.id == id) {
-                this.edges.splice(i, 1);
+    graph.removeNode = function(id) {
+        delete graph.nodes[id];
+        for(var i = 0; i < graph.edges.length; i++) {
+            if (graph.edges[i].source.id == id || graph.edges[i].target.id == id) {
+                graph.edges.splice(i, 1);
                 i--;
             }
         }
-    }
-};
+    };
+
+
+
+
+//};
 
 /*
  * Node
@@ -105,6 +120,7 @@ Graph.Node = function(id, data){
     node.data = data;
     return node;
 };
+
 Graph.Node.prototype = {
 };
 
