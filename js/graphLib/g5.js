@@ -7,6 +7,7 @@
 
 // main g5 object 
 var g5 = {};
+var graph;
 
 g5.version = .1;
 
@@ -57,7 +58,8 @@ g5.addIOPlugin = function(name, inputFct, outputFct){
 
 // function to create graph 
 g5.createGraph = function(){
-    return Graph();
+    graph= new Graph();
+    return graph;
 }
 //function to return reference of Graph object
 g5.returnGraph = function(){

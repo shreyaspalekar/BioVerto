@@ -24,17 +24,17 @@
  *
  /*--------------------------------------------------------------------------*/
 //graph object
-	var graph ={};
+/*	var graph ={};
 	console.log(graph);
-
+*/
 /*
  * Edge Factory
  */
 var EdgeFactory = function() {
-    graph.template = new Object();
-    graph.template.data = new Object();
-    graph.template.directed = false;
-    graph.template.weight = 1;
+    this.template = new Object();
+    this.template.data = new Object();
+    this.template.directed = false;
+    this.template.weight = 1;
 };
 EdgeFactory.prototype = {
     build: function(source, target) {
@@ -51,15 +51,16 @@ EdgeFactory.prototype = {
 //DISCUSS:Singleton
 var Graph = function() {
 	
-	graph.nodes = {};
-    	graph.edges = [];
-    	graph.snapshots = []; // previous graph states TODO to be implemented
-    	graph.edgeFactory = new EdgeFactory();
+	this.nodes = {};
+    	this.edges = [];
+    	this.snapshots = []; // previous graph states TODO to be implemented
+    	this.edgeFactory = new EdgeFactory();
 	
-    	return graph;
+    //	return graph;
 
 };
-//Graph.prototype = {// Broken into individual function
+
+Graph.prototype = {
     /* 
      * add a node
      * @id          the node's ID (string or number)
@@ -68,24 +69,25 @@ var Graph = function() {
      *              representation
      * addNode will update the information if the node already exists
      */
-    graph.addNode = function(id, content) {
+
+    addNode : function(id, content) {
         /* testing if node is already existing in the graph */
-        if(graph.nodes[id] == undefined) {
-            graph.nodes[id] = new Graph.Node(id, content);
+        if(this.nodes[id] == undefined) {
+            this.nodes[id] = new Graph.Node(id, content);
         } else {
-	    jQuery.extend(graph.nodes[id].data, content);//data->content
+	    jQuery.extend(this.nodes[id].data, content);//data->content
 	}
-        return graph.nodes[id];
-    };
+        return this.nodes[id];
+    },
 
     // TODO: allow update of data for an edge
 	//Discuss with Prof. DOBRA
-    graph.addEdge = function(source, target, data, directed) {
+    addEdge : function(source, target, data, directed) {
         
 	//console.log(source+" "+target);
-	var s = graph.addNode(source,data);
-        var t = graph.addNode(target,data);
-        var edge = graph.edgeFactory.build(s, t);
+	var s = this.addNode(source,data);
+        var t = this.addNode(target,data);
+        var edge = this.edgeFactory.build(s, t);
         jQuery.extend(edge.data, data);
         if (directed) { // if directed edge, add it to target adjList
 	    t.edges.push(edge);
@@ -93,22 +95,19 @@ var Graph = function() {
 	}
         s.edges.push(edge);
         graph.edges.push(edge);
-    };
+    },
     
-    graph.removeNode = function(id) {
-        delete graph.nodes[id];
-        for(var i = 0; i < graph.edges.length; i++) {
-            if (graph.edges[i].source.id == id || graph.edges[i].target.id == id) {
-                graph.edges.splice(i, 1);
+    removeNode : function(id) {
+        delete this.nodes[id];
+        for(var i = 0; i < this.edges.length; i++) {
+            if (this.edges[i].source.id == id || this.edges[i].target.id == id) {
+                this.edges.splice(i, 1);
                 i--;
             }
         }
-    };
+    }
 
-
-
-
-//};
+};
 
 /*
  * Node
