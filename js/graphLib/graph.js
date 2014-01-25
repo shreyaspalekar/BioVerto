@@ -51,7 +51,7 @@ EdgeFactory.prototype = {
 //DISCUSS:Singleton
 var Graph = function() {
 	
-	this.nodes = {};
+	this.nodes = {};//changed to array
     	this.edges = [];
     	this.snapshots = []; // previous graph states TODO to be implemented
     	this.edgeFactory = new EdgeFactory();
@@ -84,7 +84,7 @@ Graph.prototype = {
 	//Discuss with Prof. DOBRA
     addEdge : function(source, target, data, directed) {
         
-	//console.log(source+" "+target);
+	//console.log(source+" "+target); !!getting undefined undefined
 	var s = this.addNode(source,data);
         var t = this.addNode(target,data);
         var edge = this.edgeFactory.build(s, t);
@@ -114,9 +114,9 @@ Graph.prototype = {
  */
 Graph.Node = function(id, data){
     var node = {};
-    node.id = id;
     node.edges = [];
     node.data = data;
+    node.data.id = id;
     return node;
 };
 

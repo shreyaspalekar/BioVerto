@@ -123,3 +123,25 @@ g5.createAccessor = function(member){
 g5.addNodeAccessor("name", g5.createAccessor("id"));
 g5.addEdgeAccessor("weight", g5.createAccessor("weigth"));
 //g5.nodeAccessors["name"](g5.nodes.id1);
+
+
+g5.listNodes = function(){
+
+	
+	var nodes =[];
+	
+	for(var n in graph.nodes){
+		
+		nodes.push(graph.nodes[n]);
+	
+	}
+	
+	return nodes;
+	
+}
+
+g5.listEdges = function(){
+
+	return graph.edges;
+
+}
